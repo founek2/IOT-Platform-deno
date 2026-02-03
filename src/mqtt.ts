@@ -5,6 +5,8 @@ export default function connect(brokerUrl: string, config: mqtt.IClientOptions) 
     logger.debug(`Connecting to MQTT host=${brokerUrl}:${config.port} username=${config.username}`);
     const client = mqtt.connect(brokerUrl, config);
 
+    client.setMaxListeners(15) // Currently every property subscribers to mqtt messages, so default limit 10 is not enough
+
     applyLogging(client)
 
     return client;
